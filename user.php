@@ -2,7 +2,7 @@
 class user {
     public $userName, $userEmail, $userAvatar, $userPermission, $verifiedBy, $externalUserID, $greeted, $userScreenName, $internalUserId;
     function  __construct( $userName, $verifiedBy, $externalUserID = null, $eMail = null, $token = null, $secret = null, $avatarURL = null, $userScreenName = null) {
-        $getUser = new PDO("mysql:host=localhost;dbname=tweetf5_Combined", 'tweetf5_write', 'B4rgle99!');
+        $getUser = new PDO(__DB__CONNECT__STRING, __DB__USER, __DB__PASSWORD);
         $skip = false;
         $cookieId = false;
         switch($verifiedBy){
@@ -185,7 +185,7 @@ class user {
               ON votes.voterId = tblUsers.userId
               WHERE
                 tblUsers.userId =  :user";
-        $getCard = new PDO("mysql:host=localhost;dbname=tweetf5_Combined", 'tweetf5_write', 'B4rgle99!');
+        $getCard = new PDO(__DB__CONNECT__STRING, __DB__USER, __DB__PASSWORD);
         $getUser = $getCard->prepare($lookupSQL);
         $getUser->execute(array(':user'=>$uid));
         while($r = $getUser->fetch()){
